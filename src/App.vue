@@ -1,20 +1,20 @@
 <template>
   <section class="section">
     <div class="container">
-      <timeline msg="Welcome to Your Vue.js + TypeScript App"/>
+      <timeline />
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Timeline from './components/Timeline.vue';
+import { defineComponent } from "vue";
+import Timeline from "./components/Timeline.vue";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
-    Timeline
-  }
+    Timeline,
+  },
 });
 </script>
 
