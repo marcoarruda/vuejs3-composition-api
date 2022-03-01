@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:unit-dev": "vue-cli-service test:unit --watch"
+    "test:unit-dev": "vue-cli-service test:unit --watchAll"
   },
   "dependencies": {
     "axios": "^0.26.0",
