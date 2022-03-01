@@ -12,7 +12,12 @@
       </a>
     </span>
 
-    <timeline-post v-for="post in posts" :key="post.id" class="panel-block" :post="post" />
+    <timeline-post
+      v-for="post in posts"
+      :key="post.id"
+      class="panel-block"
+      :post="post"
+    />
   </nav>
 </template>
 
@@ -20,16 +25,23 @@
 import { defineComponent, ref, computed } from "vue";
 import moment from "moment";
 import { today, thisWeek, thisMonth } from "../mocks";
-import TimelinePost from './TimelinePost.vue'
+import TimelinePost from "./TimelinePost.vue";
 
 type Period = "Today" | "This Week" | "This Month";
+
+function delay() {
+  return new Promise<void>((resolve, reject) => {
+    setTimeout(resolve, 2000);
+  });
+}
 
 export default defineComponent({
   name: "Timeline",
   components: {
     TimelinePost,
   },
-  setup() {
+  async setup() {
+    await delay();
     const periods = ["Today", "This Week", "This Month"];
     const currentPeriod = ref<Period>("Today");
     const posts = computed(() => {
@@ -43,7 +55,7 @@ export default defineComponent({
         if (currentPeriod.value === "This Month") {
           return post.created.isAfter(moment().subtract(1, "month"));
         }
-        return false
+        return false;
       });
     });
 
