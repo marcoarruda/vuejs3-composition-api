@@ -24,17 +24,11 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 import moment from "moment";
-import { today, thisWeek, thisMonth, Post } from "../mocks";
-import { useStore } from '../store'
+import { Post } from "../mocks";
+import { useStore } from "../store";
 import TimelinePost from "./TimelinePost.vue";
 
 type Period = "Today" | "This Week" | "This Month";
-
-function delay() {
-  return new Promise<void>((resolve, reject) => {
-    setTimeout(resolve, 2000);
-  });
-}
 
 export default defineComponent({
   name: "Timeline",
@@ -43,17 +37,23 @@ export default defineComponent({
     TimelinePost,
   },
   async setup() {
-    await delay();
     const periods = ["Today", "This Week", "This Month"];
     const currentPeriod = ref<Period>("Today");
-    const store = useStore()
-    const allPosts: Post[] = store.getState().posts.ids.reduce<Post[]>((acc, id) => {
-      const thePost = store.getState().posts.all.get(id)
-      if (!thePost) {
-        throw Error('This post was not found')
-      }
-      return acc.concat(thePost)
-    }, [])
+    const store = useStore();
+
+    if (!store.getState().posts.loaded) {
+      await store.fetchPosts();
+    }
+
+    const allPosts: Post[] = store
+      .getState()
+      .posts.ids.reduce<Post[]>((acc, id) => {
+        const thePost = store.getState().posts.all.get(id);
+        if (!thePost) {
+          throw Error("This post was not found");
+        }
+        return acc.concat(thePost);
+      }, []);
 
     const posts = computed(() => {
       return allPosts.filter((post) => {
