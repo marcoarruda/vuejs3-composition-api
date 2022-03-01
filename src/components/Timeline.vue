@@ -37,6 +37,7 @@ function delay() {
 
 export default defineComponent({
   name: "Timeline",
+
   components: {
     TimelinePost,
   },
