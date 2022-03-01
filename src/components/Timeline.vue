@@ -16,17 +16,17 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
-type Period = 'Today' | 'This Week' | 'This Month'
+type Period = "Today" | "This Week" | "This Month";
 
 export default defineComponent({
   name: "Timeline",
   setup() {
     const periods = ["Today", "This Week", "This Month"];
-    const currentPeriod = ref<Period>('Today')
+    const currentPeriod = ref<Period>("Today");
 
     const setPeriod = (period: Period) => {
-      currentPeriod.value = period
-    }
+      currentPeriod.value = period;
+    };
 
     return { periods, currentPeriod, setPeriod };
   },
