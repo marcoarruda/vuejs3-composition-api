@@ -3,7 +3,8 @@
     <div class="column">
       <div class="field">
         <div class="label">New Post</div>
-        <input type="text" class="input" />
+        <input class="input" type="text" v-model="title" />
+        <div contenteditable ref="contentEditable" />
       </div>
     </div>
   </div>
@@ -11,7 +12,7 @@
 
 <script lang="ts">
 import { Post } from "../mocks";
-import { defineComponent, PropType } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 
 export default defineComponent({
   props: {
@@ -19,6 +20,19 @@ export default defineComponent({
       type: Object as () => Post,
       required: true,
     },
+  },
+
+  setup(props) {
+    const title = ref(props.post.title);
+    const content = ref("");
+    const contentEditable = ref(null);
+
+    console.log(contentEditable.value);
+
+    onMounted(() => {
+      console.log(contentEditable.value);
+    });
+    return { title, content, contentEditable };
   },
 });
 </script>
