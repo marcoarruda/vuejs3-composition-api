@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { Post } from "../mocks";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, watchEffect } from "vue";
 import { parse } from 'marked'
 
 export default defineComponent({
@@ -35,6 +35,11 @@ export default defineComponent({
     const title = ref(props.post.title);
     const content = ref("## Title\nEnter your post content...");
     const html = ref(parse(content.value));
+
+    watchEffect(() => {
+      html.value = parse(content.value)
+    })
+
     const contentEditable = ref<HTMLDivElement | null>(null);
 
     const handleInput = () => {
