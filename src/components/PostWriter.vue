@@ -20,9 +20,10 @@
 
 <script lang="ts">
 import { Post } from "../mocks";
-import { defineComponent, onMounted, ref, watchEffect } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import { parse } from "marked";
 import highlight from "highlight.js";
+import debounce from 'lodash/debounce'
 
 export default defineComponent({
   props: {
@@ -37,7 +38,7 @@ export default defineComponent({
     const content = ref("## Title\nEnter your post content...");
     const html = ref(parse(content.value));
 
-    watchEffect(() => {
+    const parseHtml = (str: string) => {
       html.value = parse(content.value, {
         gfm: true,
         breaks: true,
@@ -45,7 +46,9 @@ export default defineComponent({
           return highlight.highlightAuto(code).value;
         },
       });
-    });
+    }
+
+    watch(content, debounce(parseHtml, 250), { immediate: true });
 
     const contentEditable = ref<HTMLDivElement | null>(null);
 
