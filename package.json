@@ -9,7 +9,9 @@
     "test:unit-dev": "vue-cli-service test:unit --watchAll"
   },
   "dependencies": {
+    "@types/marked": "2.0.3",
     "axios": "^0.26.0",
+    "marked": "2.0.3",
     "moment": "^2.29.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.13"

@@ -13,7 +13,7 @@
       <div contenteditable ref="contentEditable" @input="handleInput" />
     </div>
     <div class="column">
-      {{ content }}
+      <div v-html="html" />
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@
 <script lang="ts">
 import { Post } from "../mocks";
 import { defineComponent, onMounted, ref } from "vue";
+import { parse } from 'marked'
 
 export default defineComponent({
   props: {
@@ -33,6 +34,7 @@ export default defineComponent({
   setup(props) {
     const title = ref(props.post.title);
     const content = ref("## Title\nEnter your post content...");
+    const html = ref(parse(content.value));
     const contentEditable = ref<HTMLDivElement | null>(null);
 
     const handleInput = () => {
@@ -49,7 +51,13 @@ export default defineComponent({
       contentEditable.value.textContent = content.value;
     });
 
-    return { title, content, contentEditable, handleInput };
+    return {
+      html,
+      title,
+      content,
+      contentEditable,
+      handleInput
+    };
   },
 });
 </script>
