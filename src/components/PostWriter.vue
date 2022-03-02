@@ -73,3 +73,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.column {
+  overflow-y: scroll;
+}
+</style>
