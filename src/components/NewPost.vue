@@ -1,5 +1,8 @@
 <template>
-  <post-writer :post="newPost" />
+  <post-writer
+    :post="newPost"
+    @save="save"
+  />
 </template>
 
 <script lang="ts">
@@ -15,13 +18,18 @@ export default defineComponent({
 
   setup() {
     const newPost: Post = {
-      id: '-1',
-      title: 'Enter your title...',
-      created: moment()
-    }
+      id: "-1",
+      title: "Enter your title...",
+      created: moment(),
+    };
+    const save = (post: Post) => {
+      console.log(post);
+    };
+
     return {
-      newPost
-    }
-  }
+      save,
+      newPost,
+    };
+  },
 });
 </script>

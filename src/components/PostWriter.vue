@@ -16,6 +16,14 @@
       <div v-html="html" />
     </div>
   </div>
+
+  <div class="columns">
+    <div class="column">
+      <button @click="save" class="button is-primary is-pulled-right">
+        Submit
+      </button>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -23,7 +31,7 @@ import { Post } from "../mocks";
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { parse } from "marked";
 import highlight from "highlight.js";
-import debounce from 'lodash/debounce'
+import debounce from "lodash/debounce";
 
 export default defineComponent({
   props: {
@@ -33,7 +41,13 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
+  emits: {
+    save: (post: Post) => {
+      return true;
+    },
+  },
+
+  setup(props, ctx) {
     const title = ref(props.post.title);
     const content = ref("## Title\nEnter your post content...");
     const html = ref(parse(content.value));
@@ -46,7 +60,7 @@ export default defineComponent({
           return highlight.highlightAuto(code).value;
         },
       });
-    }
+    };
 
     watch(content, debounce(parseHtml, 250), { immediate: true });
 
@@ -66,7 +80,19 @@ export default defineComponent({
       contentEditable.value.textContent = content.value;
     });
 
+    const save = () => {
+      const newPost: Post = {
+        ...props.post,
+        title: title.value,
+        html: html.value,
+        markdown: content.value,
+      };
+
+      ctx.emit("save", newPost);
+    };
+
     return {
+      save,
       html,
       title,
       content,
@@ -79,6 +105,6 @@ export default defineComponent({
 
 <style>
 .column {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 </style>
