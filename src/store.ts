@@ -25,6 +25,12 @@ class Store {
     return readonly(this.state);
   }
 
+  async createPost(post: Post) {
+    const response = await axios.post<Post>("/posts", post);
+    this.state.posts.all.set(post.id, response.data);
+    this.state.posts.ids.push(post.id);
+  }
+
   async fetchPosts() {
     const response = await axios.get<Post[]>("/posts");
     const postsState: PostsState = {
@@ -40,7 +46,7 @@ class Store {
   }
 }
 
-const all = new Map<string, Post>()
+const all = new Map<string, Post>();
 
 const store = new Store({
   posts: {
@@ -54,7 +60,7 @@ const store = new Store({
 // composables
 // provide inject
 export function useStore() {
-  return store
+  return store;
 }
 
 store.getState().posts.loaded;

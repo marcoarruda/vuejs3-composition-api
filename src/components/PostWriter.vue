@@ -10,7 +10,12 @@
 
   <div class="columns">
     <div class="column">
-      <div contenteditable ref="contentEditable" @input="handleInput" data-test="content" />
+      <div
+        contenteditable
+        ref="contentEditable"
+        @input="handleInput"
+        data-test="content"
+      />
     </div>
     <div class="column">
       <div v-html="html" />
@@ -19,7 +24,11 @@
 
   <div class="columns">
     <div class="column">
-      <button @click="save" class="button is-primary is-pulled-right" data-test="submit">
+      <button
+        @click="save"
+        class="button is-primary is-pulled-right"
+        data-test="submit"
+      >
         Submit
       </button>
     </div>
