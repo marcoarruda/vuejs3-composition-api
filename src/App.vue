@@ -4,14 +4,18 @@
     <div class="modal-content">
       <div id="modal"></div>
     </div>
-    <button
-      class="modal-close is-large"
-      @click="hide"
-    ></button>
+    <button class="modal-close is-large" @click="hide"></button>
   </div>
 
   <section class="section">
     <div class="container">
+      <form-input
+        v-model="username"
+        name="Username"
+        type="text"
+        error="There is an error"
+      />
+      {{ username }}
       <navbar />
       <router-view />
     </div>
@@ -19,18 +23,20 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 
 import { useModal } from "./useModal";
 
+import FormInput from "./components/FormInput.vue";
 import Navbar from "./components/Navbar.vue";
 
 export default defineComponent({
   name: "App",
-  components: { Navbar },
+  components: { FormInput, Navbar },
 
   setup() {
     const modal = useModal();
+    const username = ref("username");
 
     const style = computed(() => {
       return {
@@ -38,10 +44,11 @@ export default defineComponent({
       };
     });
     return {
-      style,
       hide: () => {
-        modal.hideModal()
-      }
+        modal.hideModal();
+      },
+      style,
+      username,
     };
   },
 });
