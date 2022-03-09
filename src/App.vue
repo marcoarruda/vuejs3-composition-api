@@ -1,4 +1,13 @@
 <template>
+  <div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div id="modal"></div>
+    </div>
+    <button class="modal-close is-large"></button>
+  </div>
+
+
   <section class="section">
     <div class="container">
       <navbar />
