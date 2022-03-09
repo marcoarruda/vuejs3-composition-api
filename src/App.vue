@@ -1,12 +1,14 @@
 <template>
-  <div class="modal">
+  <div class="modal" :style="style">
     <div class="modal-background"></div>
     <div class="modal-content">
       <div id="modal"></div>
     </div>
-    <button class="modal-close is-large"></button>
+    <button
+      class="modal-close is-large"
+      @click="hide"
+    ></button>
   </div>
-
 
   <section class="section">
     <div class="container">
@@ -17,13 +19,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
+
+import { useModal } from "./useModal";
 
 import Navbar from "./components/Navbar.vue";
 
 export default defineComponent({
   name: "App",
   components: { Navbar },
+
+  setup() {
+    const modal = useModal();
+
+    const style = computed(() => {
+      return {
+        display: modal.show.value ? "block" : "none",
+      };
+    });
+    return {
+      style,
+      hide: () => {
+        modal.hideModal()
+      }
+    };
+  },
 });
 </script>
 
