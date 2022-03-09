@@ -9,13 +9,6 @@
 
   <section class="section">
     <div class="container">
-      <form-input
-        v-model="username"
-        name="Username"
-        type="text"
-        error="There is an error"
-      />
-      {{ username }}
       <navbar />
       <router-view />
     </div>
@@ -36,7 +29,6 @@ export default defineComponent({
 
   setup() {
     const modal = useModal();
-    const username = ref("username");
 
     const style = computed(() => {
       return {
@@ -48,7 +40,6 @@ export default defineComponent({
         modal.hideModal();
       },
       style,
-      username,
     };
   },
 });
